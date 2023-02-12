@@ -1,0 +1,68 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="row pb-0 mb-0">
+        <div class="col-12 px-5">
+            <div class="input-group">
+                <input 
+                    required 
+                    placeholder="Search for people or repositories..." 
+                    type="text" 
+                    class="form-control" 
+                    id="url"
+                    formControlName="searchTerm"
+                >
+
+                <button 
+                    type="submit" 
+                    class="input-group-text d-flex justify-content-sm-around"
+                    [disabled]="!searchForm.valid"
+                >
+                    Search 
+                    <i class="bi bi-search pl-3"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row px-5 mt-1">
+        <div 
+            class="text text-danger" 
+            *ngIf="searchForm.controls['searchTerm'].errors 
+            && searchForm.controls['searchTerm'].errors['required']
+            && (searchTerm!.dirty || searchTerm!.touched)"
+        >
+            The search term is required
+        </div>
+    </div>
+    
+    <div class="row px-5 pt-2" formGroupName="checks">
+        <div class="col-12 col-md-3 col-lg-1">
+            <div class="form-check">
+                <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="usersCheckbox" 
+                formControlName="users"
+            >
+                <label class="form-check-label" for="usersCheckbox">
+                    Users
+                </label>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-1">
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="reposCheckbox" 
+                    name="reposCheckbox" 
+                    formControlName="repos"
+                >
+                <label class="form-check-label" for="reposCheckbox">
+                    Repositories
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row px-5">
+        <div class="text text-danger" *ngIf="searchForm.controls['checks'].errors && searchForm.controls['checks'].errors['requireCheckboxesToBeChecked']">At least one checkbox is required to be checked</div>
+    </div>
+</form>

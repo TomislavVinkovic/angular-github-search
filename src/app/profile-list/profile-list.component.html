@@ -1,0 +1,78 @@
+<div class="row py-5" *ngIf="(searchItemService.users.length > 0 || searchItemService.repos.length > 0) || updating">
+  <div class="col-12 d-flex gap-4 flex-row justify-content-start align-items-center">
+    <button 
+      (click)="toggleUsers()" 
+      class="btn" 
+      [ngClass]="{'btn-primary' : show_users, 'btn-outline-primary' : !show_users}"
+    >
+      Users
+    </button>
+    <button 
+      (click)="toggleRepos()" 
+      class="btn" 
+      [ngClass]="{'btn-primary' : show_repos, 'btn-outline-primary' : !show_repos}"
+    >
+      Repositories
+    </button>
+  </div>
+</div>
+<div class="row">
+    <ng-container *ngIf="(searchItemService.users.length > 0 || searchItemService.repos.length > 0) || updating">
+      <p class="text text-black fw-light py-2" *ngIf="show_users && searchItemService.users.length === 0 && !updating">There are no users to display</p>
+      <p class="text text-black fw-light py-2" *ngIf="show_repos && searchItemService.repos.length === 0 && !updating">There are no repositories to display</p>
+    </ng-container>
+
+    <!-- PAGINATION -->
+    <!-- Users pagination -->
+    <ng-container *ngIf="show_users && (searchItemService.users.length > 0 || updating)">
+      <ngb-pagination 
+      [boundaryLinks]="true" 
+      [collectionSize]="Math.max(searchItemService.total_user_count/30, 1)" 
+      [(page)]="users_page" 
+      aria-label="User pagination"
+      [maxSize]="5"
+      [rotate]="true"
+      [ellipses]="false"
+      (pageChange)="updateUsersList()"
+      ></ngb-pagination>
+      
+    </ng-container>
+
+    <!-- Repos pagination -->
+    <ng-container *ngIf="show_repos && (searchItemService.repos.length > 0 || updating)">
+      <ngb-pagination
+       [boundaryLinks]="true" 
+       [collectionSize]="Math.max(searchItemService.total_repo_count/30, 1)" 
+       [(page)]="repos_page" 
+       aria-label="Repo pagination"
+       [maxSize]="5"
+	     [rotate]="true"
+	     [ellipses]="false"
+       (pageChange)="updateReposList()"
+       ></ngb-pagination>
+    </ng-container>
+
+    <!-- PAGINATION END -->
+    
+    <ngb-accordion [closeOthers]="true">
+        <ng-container *ngIf="show_users">
+          <ng-container *ngFor="let user of searchItemService.users; let i= index">
+              <ngb-panel id="ngb-user-panel-{{i}}" title="{{user.username}}">
+                <ng-template ngbPanelContent>
+                  <app-user-list-item [user]="user"></app-user-list-item>
+                </ng-template>
+              </ngb-panel>
+            </ng-container>
+        </ng-container>
+        
+        <ng-container *ngIf="show_repos">
+            <ng-container *ngFor="let repo of searchItemService.repos; let i= index">
+                <ngb-panel id="ngb-repo-panel-{{i}}" title="{{repo.name}}">
+                  <ng-template ngbPanelContent>
+                    <app-repo-list-item [repo]="repo"></app-repo-list-item>
+                  </ng-template>
+                </ngb-panel>
+              </ng-container>
+        </ng-container>
+      </ngb-accordion>
+</div>

@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+@font-face {
+    font-family: 'Hubot Sans';
+    src:
+      url('/assets/fonts/Hubot-Sans-Black.woff2') format('woff2 supports variations'),
+      url('/assets/fonts/Hubot-Sans-Black.woff2') format('woff2-variations');
+    font-weight: 200 900;
+    font-stretch: 75% 125%;
+  }
