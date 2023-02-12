@@ -11,7 +11,6 @@ import { User } from './User/user';
   providedIn: 'root'
 })
 export class GithubService {
-  private token = "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";
   private rootURL = 'https://api.github.com'
   private latestSearch : string = "";
 
